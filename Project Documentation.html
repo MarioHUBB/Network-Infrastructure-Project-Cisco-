@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NNITS Network Infrastructure</title>
+<style>
+    body {
+        background-color: #cee0f5;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .container {
+        background-color: white;
+        padding: 40px 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        text-align: left;
+        max-width: 800px;
+        width: 95%;
+        line-height: 1.8;
+    }
+    h1, h2, h3 {
+        color: #2e4a68;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    p, li {
+        color: #333;
+        margin-bottom: 10px;
+    }
+    .section {
+        margin-bottom: 30px;
+    }
+    ul {
+        margin-left: 20px;
+    }
+    .contact {
+        background-color: #f0f4f8;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .contact a {
+        color: #2e4a68;
+        text-decoration: none;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>NNITS Network Infrastructure Project</h1>
+    <h3>Project Documentation – by Mario Dumba</h3>
+
+    <div class="section">
+        <h2>1. Company Overview</h2>
+        <p><b>Company Name:</b> NNITS (Namibia National Institute of Technology Services)</p>
+        <p><b>Industry:</b> Information Technology and Administration</p>
+        <p><b>Headquarters:</b> Kavango East, Namibia</p>
+        <p><b>Branches:</b> Kavango West, Zambezi, Ohangwena, Oshana, Omusati, Kunene, Oshikoto, Khomas</p>
+        <p>NNITS is a simulated organization representing a medium-scale enterprise providing technology services and administrative support across Namibia. The headquarters in Kavango East manages human resources, IT, and finance departments, while branch offices focus on administrative tasks and communicate with HQ for coordination and resource management.<p>
+        <p>All routers and switches, are secured using the password <b>Mario@2025</b> to ensure proper access control.</p>
+
+    </div>
+
+    <div class="section">
+        <h2>2. Project Purpose</h2>
+        <p>The purpose of this project was to create a realistic and fully functional network infrastructure that simulates the operation of a medium-sized organization. This project allows students to demonstrate their networking skills in a practical environment by configuring and managing routers, switches, and PCs within a simulated enterprise network. Specifically, the project focuses on:</p>
+        <ul>
+            <li>Planning and implementing efficient IP addressing schemes and subnetting for different network segments.</li>
+            <li>Creating VLANs and configuring inter-VLAN routing to separate departments logically while allowing controlled communication.</li>
+            <li>Using OSPF as a dynamic routing protocol to enable seamless communication between HQ and branch offices.</li>
+            <li>Configuring DHCP servers to automatically assign IP addresses to devices, simplifying network administration.</li>
+            <li>Applying network security features, including password encryption, login blocks, and banners to protect devices from unauthorized access.</li>
+            <li>Documenting every step professionally to create a comprehensive project portfolio for academic or professional purposes.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Network Design Overview</h2>
+        <p>The network topology consists of nine routers, one for each branch and one central HQ router. Each branch router connects to the HQ router using serial interfaces to simulate point-to-point WAN links. Each router also connects to a switch, which in turn connects to three PCs representing branch employees. The HQ router is connected to a more complex internal network, divided into three VLANs representing the HR, IT, and Finance departments. The VLANs ensure logical separation of departments while still allowing controlled communication between them through router subinterfaces using dot1Q encapsulation.</p>
+    </div>
+
+    <div class="section">
+        <h2>4. IP Addressing and Subnetting</h2>
+        <p>All IP addresses in this network use private addressing according to RFC 1918. Each VLAN and branch subnet was carefully planned to provide sufficient IP addresses for all devices while minimizing waste:</p>
+        <ul>
+            <li><b>HQ VLANs (/28):</b> VLAN 11 – HR: 10.0.11.0/28, VLAN 12 – IT: 10.0.12.0/28, VLAN 13 – Finance: 10.0.13.0/28. Each VLAN has 16 usable host addresses, with the first address reserved for the router gateway.</li>
+            <li><b>Branch Subnets (/26–/27):</b> Each branch has a dedicated subnet such as Khomas 10.0.20.0/26 or Zambezi 10.0.30.0/27, allowing for proper network separation and scalability.</li>
+            <li><b>WAN Links (/30):</b> Point-to-point connections between HQ and branch routers are assigned /30 subnets for efficient IP utilization.</li>
+        </ul>
+        <p>Reserved IP addresses include the first IP in each subnet for the router interface (default gateway) and additional addresses can be allocated for static servers or devices if required.</p>
+    </div>
+
+    <div class="section">
+        <h2>5. VLAN Implementation at HQ</h2>
+        <p>VLANs were configured at the HQ switch to logically separate the three main departments. Router subinterfaces were created for each VLAN using dot1Q encapsulation, enabling inter-VLAN routing. This allows PCs in HR, IT, and Finance to communicate securely while maintaining departmental isolation.</p>
+    </div>
+
+    <div class="section">
+        <h2>6. OSPF Configuration</h2>
+        <p>OSPF (Open Shortest Path First) was configured on all routers to allow dynamic routing between HQ and all branches. The process ID 10 was used, and all routers were included in Area 0. OSPF enables the automatic exchange of routing information, ensuring that all branch PCs can communicate with HQ VLANs and that routing tables remain updated as network changes occur.</p>
+    </div>
+
+    <div class="section">
+        <h2>7. DHCP Configuration</h2>
+        <p>DHCP servers were implemented on all routers to automate IP address allocation. The HQ router serves VLANs with /28 subnets, and branch routers serve their respective branch subnets (/26 or /27). The first IP address in each subnet is reserved as the default gateway. DNS servers were also configured to allow PCs to resolve domain names properly.</p>
+    </div>
+
+    <div class="section">
+        <h2>8. Security Mechanisms</h2>
+        <ul>
+            <li><b>Enable Secret Password:</b> <code>enable secret Mario@2025</code> – encrypts privileged access passwords.</li>
+            <li><b>Service Password Encryption:</b> <code>service password-encryption</code> – ensures all plain-text passwords in configuration files are encrypted.</li>
+            <li><b>Login Block:</b> <code>login block-for 60 attempts 3 within 30</code> – protects against brute-force login attempts.</li>
+            <li><b>Banners:</b> Legal warning banners were configured on all routers and switches for compliance and security awareness.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>9. Switch Port Configuration</h2>
+        <p>The HQ switch was configured with trunk ports connecting to the router to carry all VLANs. Access ports were assigned to VLANs 11 (HR), 12 (IT), and 13 (Finance), while branch switches had access ports for their connected PCs. This setup ensures that department traffic is properly segmented and routed through the HQ router.</p>
+    </div>
+
+    <div class="section">
+        <h2>10. WAN Connectivity</h2>
+        <p>Each branch router connects to the HQ router using serial point-to-point links with /30 subnets. This design ensures efficient use of IP addresses while maintaining clear separation of WAN traffic. Branch devices can communicate with HQ VLANs, and vice versa, through OSPF dynamic routing.</p>
+    </div>
+
+    <div class="section">
+        <h2>11. Learning Outcomes</h2>
+        <ul>
+            <li>Designed and implemented a realistic multi-branch network topology representing a medium-scale enterprise.</li>
+            <li>Applied subnetting and IP address planning to allocate resources efficiently across LANs and WANs.</li>
+            <li>Configured VLANs and inter-VLAN routing to separate department traffic while allowing secure communication.</li>
+            <li>Implemented OSPF to ensure dynamic routing and maintain connectivity across all branches.</li>
+            <li>Configured DHCP servers to automate IP address management for both HQ VLANs and branch networks.</li>
+            <li>Applied network security mechanisms such as password encryption, login block, and legal banners to protect the network.</li>
+            <li>Enhanced professional documentation and reporting skills by detailing configurations and design decisions.</li>
+        </ul>
+        
+    </div>
+
+    <div class="section">
+        <h2>12. Project Summary</h2>
+        <p>This project demonstrates a fully functional enterprise network using Cisco Packet Tracer, integrating IP planning, VLAN segmentation, DHCP management, OSPF dynamic routing, and multiple security mechanisms. It illustrates how a central HQ can manage multiple branches, maintain network efficiency, and
+<div class="section contact">
+    <h2>Contact Information</h2>
+    <p>If you would like more details about this project or have any questions, feel free to reach out to me using the following contact methods:</p>
+    <ul>
+        <li>Email: <a href="mailto:dumbamari02@gmail.com">dumbamari02@gmail.com</a></li>
+        <li>Instagram: <a href="https://www.instagram.com/modestmarioo" target="_blank">@modestmarioo</a></li>
+        <li>GitHub: <a href="https://github.com/MarioHUBB" target="_blank">https://github.com/MarioHUBB</a> – check out more projects here</li>
+    </ul>
+    <p>I welcome any feedback or collaboration opportunities!</p>
+</div>
